@@ -1,0 +1,9 @@
+---
+- name: ejemplo copy
+  hosts: servera
+  tasks:
+    - name: copiar archivo al servidor remoto
+      copy:
+        content: "Contenido del archivo"
+        dest: /tmp/miarchivo
+        force: yes

@@ -1,0 +1,20 @@
+---
+- name: prueba errores condicionales
+  hosts: servera
+  tasks:
+    
+    #- name: una tarea que siempre devuelve ok
+    #  shell: "echo Mensaje fallido"
+    #  register: command_result
+    #  failed_when: "'Mensaje fallido' in command_result.stdout"
+    #
+    - name: ejecutar comando cualquiera
+      shell: "echo Mensaje fallido"
+      register: command_result
+      ignore_errors: yes
+
+    - name: verificar si hubo error y fallar el script o playbook
+      fail:
+        msg: "la tarea anterior fallo" 
+      when: "'Mensaje fallido' in command_result.stdout"
+     

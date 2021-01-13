@@ -1,0 +1,25 @@
+---
+- name: ejemplo de bucles y condicionales jinja2
+  hosts: servera
+  vars:
+    users:
+      - root
+      - pperalta
+      - juan
+    condicional: false
+    personas:
+      - nombre: Pablo
+        apellido: Peralta
+        edad: 27
+      - nombre: Juan
+        apellido: Perez
+        edad: 30
+      - nombre: Susana
+        apellido: Martinez
+        edad: 25
+  tasks:
+    - name: configurar archivo cualquiera a partir de un template
+      template:
+        src: templates/archivocualquiera.txt.j2
+        dest: /tmp/archivocualquiera.txt
+

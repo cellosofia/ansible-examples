@@ -1,0 +1,8 @@
+---
+- name: prueba errores condicionales
+  hosts: servera
+  tasks:
+    - name: ejecutar comando cualquiera
+      shell: "echo Mensaje fallido"
+      register: command_result
+      changed_when: "'exitoso' in command_result.stdout"

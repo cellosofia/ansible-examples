@@ -1,0 +1,27 @@
+---
+string_var: "Esto es un string"
+string_var_2: Esto es otro string
+string_var_3: |
+  Esto es una linea
+  esto es otra linea
+  y esta es la tercera linea
+string_var_4: >
+  Esto es una linea,
+  esto es la continuacion de la primera linea
+  por mas de que se encuentren en distintas lineas
+  en el playbook
+persona_1:
+  nombre: "Pablo"
+  apellido: "Peralta"
+  edad: "27"
+  fecha_nac:
+    dia: 21
+    mes: 12
+    anio: 1993
+persona_2: { nombre: "Pablo", apellido: "Peralta" }
+lista_paquetes:
+  - git
+  - net-tools
+  - httpd
+  - mysql
+lista_paquetes_2: [ "git", "net-tools", "httpd", "mysql" ]

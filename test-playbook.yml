@@ -1,0 +1,26 @@
+---
+- name: Configure important user consistently
+  hosts: webservers
+  remote_user: devops
+  become: yes
+  become_method: sudo
+  tasks:
+    - name: newbie exists with UID 4000
+        user:
+        name: newbie
+        uid: 4000
+        state: absent
+
+- name: Configure apache package
+  hosts: webservers
+  tasks:
+    - name: Install httpd package
+      package:
+        name: httpd
+        state: present
+
+    - name: Ensure httpd service is up
+      service:
+        name: httpd
+        state: started
+        enabled: true

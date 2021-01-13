@@ -1,0 +1,10 @@
+---
+- name: instalar el paquete {{ mypackage }}
+  yum:
+    name: "{{ mypackage }}"
+    state: installed
+
+- name: iniciar el servicio {{ myservice }}
+  service:
+    name: "{{ myservice }}"
+    state: started

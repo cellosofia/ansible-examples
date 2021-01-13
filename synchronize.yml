@@ -1,0 +1,8 @@
+---
+- name: ejemplo synchronize
+  hosts: servera
+  tasks:
+    - name: copiar todos los archivos de forma sincronizada al servidor remoto
+      synchronize:
+        src: directorio_a_sincronizar
+        dest: /tmp/directorio_a_sincronizar

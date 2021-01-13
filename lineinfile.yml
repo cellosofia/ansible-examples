@@ -1,0 +1,9 @@
+---
+- name: ejemplo lineinfile
+  hosts: servera
+  tasks:
+    - name: agregar linea siempre en el /etc/hosts
+      lineinfile:
+        path: /etc/hosts
+        line: "1.1.1.1 one.one.one.one"
+        state: absent

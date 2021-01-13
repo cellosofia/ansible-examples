@@ -1,0 +1,7 @@
+---
+- name: ejemplo script
+  hosts: servera
+  tasks:
+    - name: prueba script
+      script: scripts/myscript
+

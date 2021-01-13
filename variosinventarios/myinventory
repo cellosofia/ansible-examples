@@ -1,0 +1,28 @@
+servera
+serverb
+servera.lab.example.com
+serverb.lab.example.com
+
+[lab]
+servera.lab.example.com
+serverb.lab.example.com
+
+[test]
+serverc.lab.example.com
+serverd.lab.example.com
+
+[datacenter1]
+servera.lab.example.com
+serverc.lab.example.com
+
+[datacenter2]
+serverb.lab.example.com
+serverd.lab.example.com
+
+[datacenter:children]
+datacenter1
+datacenter2
+
+[new]
+servera.testing ansible_host=172.25.250.10
+serverb.testing ansible_host=172.25.250.11

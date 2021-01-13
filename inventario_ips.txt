@@ -1,0 +1,11 @@
+ok: [servera] => {
+    "ansible_facts.default_ipv4.address": "172.25.250.10"
+--
+ok: [serverb] => {
+    "ansible_facts.default_ipv4.address": "172.25.250.11"
+--
+ok: [serverc] => {
+    "ansible_facts.default_ipv4.address": "172.25.250.12"
+--
+ok: [serverd] => {
+    "ansible_facts.default_ipv4.address": "172.25.250.13"

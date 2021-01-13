@@ -1,0 +1,11 @@
+---
+- name: Instalar un paquete e imprimir el resultado
+  hosts: webservers
+  tasks:
+    - name: instalar el paquete
+      yum:
+        name: httpd
+        state: installed
+      register: install_result
+
+    - debug: var=install_result

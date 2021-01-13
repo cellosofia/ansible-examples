@@ -1,0 +1,57 @@
+---
+- name: ejemplo yum
+  hosts: servera
+  tasks:
+    - name: instalar el paquete httpd si no esta instalado
+      yum:
+        name: httpd
+        state: present
+    
+    - name: actualizar todos los paquetes del sistema operativo
+      yum:
+        name: "*"
+        state: latest
+
+    - name: actualizar solamente el paquete openssh-server
+      yum:
+        name: openssh-server
+        state: latest
+
+    - name: desinstalar el paquete nginx
+      yum:
+        name: nginx
+        state: absent
+
+    - name: instalar el grupo que contiene los paquetes de desarrollo
+      yum:
+        name: "@Development Tools"
+        state: present
+
+    - name: instalar el modulo perl en version 5.26 opcion minimal
+      yum:
+        name: "@perl:5.26/minimal"
+        state: present
+
+    - name: instalar el paquete vim
+      yum:
+        name: vim
+        state: present
+
+    - name: instalar todos los paquetes de una vez
+      yum:
+        name:
+          - httpd
+          - vim
+          - "@Development Tools"
+          - "@perl:5.26/minimal"
+        state: installed
+
+    - name: instalar todos los paquetes de una vez utilizando loop
+      yum:
+        name: "{{ item }}"
+        state: present
+      loop:
+        - httpd
+        - mod_ssl
+        - httpd-tools
+

@@ -1,0 +1,7 @@
+---
+- name: utilizar el rol motd
+  hosts: all
+  vars:
+    system_owner: cellosofia1@gmail.com
+  roles:
+    - pperalta.motd

@@ -1,0 +1,24 @@
+---
+- name: ejemplo de modulos relacionados a paquetes de sistema operativo
+  hosts: servera
+  tasks:
+    - name: ejemplo yum
+      yum:
+        name: httpd
+        state: present
+      when: ansible_distribution == "RedHat"
+
+    - name: ejemplo dnf
+      dnf:
+        name: httpd
+        state: present
+      when: ansible_distribution == "Fedora"
+
+    # la desventaja de utilizar este modulo "package" es que 
+    # no contamos con las funcionalidades especificas del gestor de paquetes del SO
+    # ademas, dependiendo de la distro, el nombre del paquete es muy probable que cambie
+    - name: modulo generico package para cualquier distribucion de linux
+      package:
+        name: apache2
+        state: present
+      when: ansible_distribution == "Debian"

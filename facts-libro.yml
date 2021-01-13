@@ -1,0 +1,14 @@
+---
+- hosts: all
+  tasks:
+    - name: imprimir varios facts de ansible
+      debug:
+        msg: >
+          La IP IPv4 por defecto para {{ ansible_facts.fqdn }}
+          es {{ ansible_facts.default_ipv4.address }}
+
+    - name: imprimir varios facts de ansible
+      debug:
+        msg: >
+          La IP IPv4 por defecto para {{ ansible_fqdn }}
+          es {{ ansible_default_ipv4.address }}

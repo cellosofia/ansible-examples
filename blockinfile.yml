@@ -1,0 +1,11 @@
+---
+- name: ejemplo blockinfile
+  hosts: servera
+  tasks:
+    - name: agregar bloque siempre en el /etc/hosts
+      blockinfile:
+        path: /etc/hosts
+        block: |
+          1.1.1.1 one.one.one.one
+          8.8.8.8 dns.google.com
+        state: present

@@ -1,0 +1,25 @@
+---
+- name: prueba errores
+  hosts: servera
+  force_handlers: yes
+  tasks:
+    
+    - name: una tarea que siempre devuelve ok
+      command: /bin/true
+      notify: restart httpd
+     
+    - name: instalar paquete que no existe
+      yum:
+        name: noexiste
+        state: installed
+      ignore_errors: true
+
+    - name: esto siempre tiene que ejecutarse
+      debug:
+        msg: Este mensaje debe aparecer siempre
+
+  handlers:
+    - name: restart httpd
+      service:
+        name: httpd
+        state: restarted

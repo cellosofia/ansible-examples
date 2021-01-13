@@ -1,0 +1,10 @@
+---
+- name: instalar el paquete httpd
+  yum:
+    name: httpd
+    state: installed
+
+- name: iniciar el servicio httpd
+  service:
+    name: httpd
+    state: started

@@ -1,0 +1,16 @@
+--- 
+- name: ejemplo package_facts
+  hosts: servera
+  tasks:
+    - name: recuperar informacion de paquetes instalados en los nodos administrados
+      package_facts:
+        manager: auto
+
+    - name: listar paquetes instalados
+      debug:
+        var: ansible_facts.packages
+
+    - name: verificar la version instalada del paquete vim-common
+      debug:
+        msg: "La version instalada de vim-common es {{ ansible_facts.packages['vim-common'][0].version }}"
+      when: "'vim-common' in ansible_facts.packages"

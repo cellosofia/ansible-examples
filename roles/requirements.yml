@@ -1,0 +1,12 @@
+# haciendo referencia al ansible galaxy
+- src: geerlingguy.redis
+  version: "1.6.0"
+  name: redis_prod
+
+# haciendo referencia a un archivo .tar.gz. Tambien llamado tarball
+- src: https://github.com/geerlingguy/ansible-role-redis/archive/1.5.0.tar.gz
+
+# haciendo referencia a un repositorio git
+- src: https://github.com/geerlingguy/ansible-role-redis.git
+  scm: git
+  version: "1.7.0"

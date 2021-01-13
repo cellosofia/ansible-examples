@@ -1,0 +1,9 @@
+---
+- name: ejemplo fetch
+  hosts: servera
+
+  tasks: 
+    - name: obtener archivo desde el servidor remot
+      fetch:
+        src: /tmp/miarchivo
+        dest: files/

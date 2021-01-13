@@ -1,0 +1,12 @@
+---
+- name: instalar web server
+  hosts: webservers
+  vars:
+    install_package: true
+  tasks:
+    - name: importar tareas de instalacion
+      import_tasks: tasks/install_package.yml
+      vars:
+        mypackage: httpd
+        myservice: httpd
+      when: install_package == true

@@ -1,0 +1,10 @@
+---
+- name: recolectar facts
+  hosts: all
+  gather_facts: true
+  tasks:
+    - debug: var=ansible_facts.default_ipv4.address
+    - debug: var=ansible_facts.kernel
+    - debug: var=ansible_facts['kernel']
+    - debug: var=ansible_distribution
+

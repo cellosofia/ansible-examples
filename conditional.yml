@@ -1,0 +1,12 @@
+---
+- name: Simple boolean task demo
+  hosts: servera
+  vars:
+    run_my_task: false
+
+  tasks:
+    - name: httpd package is installed
+      yum:
+        name: httpd
+        state: installed
+      when: run_my_task

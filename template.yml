@@ -1,0 +1,31 @@
+---
+- name: instalar y configurar ssh en los hosts administrados
+  hosts: all
+  serial: "50%"
+  vars:
+    ssh_port: "22"
+    root_allowed: "yes"
+  tasks:
+    - name: instalar el servidor ssh
+      yum:
+        name: openssh-server
+        state: installed
+
+    - name: configurar el servidor ssh a partir de un template
+      template:
+        src: templates/sshd_config.j2
+        dest: /etc/ssh/sshd_config
+      notify:
+        - restart sshd
+
+    - name: asegurarnos de que el servicio sshd este habilitado y corriendo
+      service:
+        name: sshd
+        state: started
+        enabled: true
+
+  handlers:
+    - name: restart sshd
+      service:
+        name: sshd
+        state: restarted

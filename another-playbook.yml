@@ -1,0 +1,62 @@
+---
+- name: Example playbook
+  hosts: servera
+  vars:
+    myvar: myvalue
+    personas:
+      - name: jane
+        group: wheel
+      - name: joe
+        group: root
+  vars_files:
+    - variables/vars.yml
+  gather_facts: no
+  tasks:
+    #- name: Non-idempotent approach with shell module
+    #  shell: echo "nameserver 192.0.2.1" > /etc/resolv.conf
+    
+    # Esto es un comentario dentro de un playbook
+    - name: Idempotent approach with copy module # esto tambien es un comentario
+      copy:
+        dest: /tmp/test
+        content: "{{ persona_1.nombre }}"
+
+    - name: Copiar template de configuracion de apache
+      template:
+        src: templates/httpd.conf.j2
+        dest: /etc/httpd/conf/httpd.conf
+      notify:
+        - restart mysql
+        - restart httpd
+
+    - name: Instalar paquetes
+      yum:
+        name: "{{ item }}"
+        state: present
+      loop: "{{ lista_paquetes }}"
+
+    - name: forma larga y recomendada de diccionario yaml para los modulos
+      service:
+        name: httpd
+        state: started
+        enabled: true
+
+    - name: Asegurar que el usuario exista en los grupos correctos
+      user:
+        name: "{{ item.name }}"
+        state: present
+        group: "{{ item.group }}"
+      loop: "{{ personas }}"
+      when: item.name == "joe"
+
+  
+  handlers:
+    - name: restart httpd
+      service:
+        name: httpd
+        state: restarted
+
+    - name: restart mysql
+      service:
+        name: mariadb
+        state: restarted

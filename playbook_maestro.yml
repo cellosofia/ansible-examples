@@ -1,0 +1,20 @@
+---
+- name: preprocesamiento de tareas
+  hosts: all
+  tasks:
+    - name: preprocesamiento
+      debug:
+        msg: hello world desde el playbook maestro, preprocesamiento
+
+- name: importar el play 1
+  import_playbook: playbooks/play1.yml
+
+- name: importar el play 2
+  import_playbook: playbooks/play2.yml
+
+- name: postprocesamiento de tareas
+  hosts: all
+  tasks:
+    - name: postprocesamiento
+      debug:
+        msg: hello world desde el playbook maestro, postprocesamiento

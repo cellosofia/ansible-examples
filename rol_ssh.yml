@@ -1,0 +1,23 @@
+---
+- name: instalar ssh en los hosts administrados
+  hosts: all
+  pre_tasks:
+    - name: imprimir mensaje antes de la ejecucion del rol
+      debug:
+        msg: Esto se imprimira antes de la ejecucion del rol
+  roles:
+    - role: pperalta.ssh
+      root_allowed: "yes"
+      ssh_port: "22"
+  tasks:
+    - debug: 
+        msg: esto se va a ejecutar despues del rol
+      notify: my handler
+  post_tasks:
+    - debug:
+        msg: 'post-task'
+      notify: my handler
+  handlers:
+    - name: my handler
+      debug:
+        msg: Estoy ejecutando el handler final

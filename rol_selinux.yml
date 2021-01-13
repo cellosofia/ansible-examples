@@ -1,0 +1,47 @@
+---
+- name: aplicar rol de sistema de selinux
+  hosts: webservers
+  vars:
+    selinux_state: enforcing
+    selinux_booleans:
+      - name: 'httpd_can_network_connect'
+        state: 'on'
+        persistent: 'yes'
+    selinux_fcontext:
+      - target: '/srv/www(/.*)?'
+        setype: 'httpd_sys_content_t'
+        state: 'present'
+    selinux_restore_dirs:
+      - /srv/www
+    selinux_ports:
+      - ports: '82'
+        setype: 'http_port_t'
+        proto: 'tcp'
+        state: 'present'
+  tasks:
+    - name: crear directorio de apache
+      file:
+        state: directory
+        path: /srv
+
+    - name: crear directorio de apache
+      file:
+        state: directory
+        path: /srv/www
+
+
+    - name: aplicar rol de selinux
+      block:
+        - include_role:
+            name: rhel-system-roles.selinux
+      rescue:
+        - name: verifico si fallo el rol por otras razones que no son un reinicio del sistema
+          fail:
+          when: not selinux_reboot_required
+
+        - name: reiniciar el nodo administrado
+          reboot:
+
+        - name: reaplicar el rol del sistema selinux
+          include_role:
+            name: rhel-system-roles.selinux

@@ -1,0 +1,33 @@
+
+
+{% for user in users %}
+  - Usuario:  {{ user }}
+{% endfor %}
+
+{# ejemplo de bucle for #}
+{% for user in users if not user == "root" %}
+Usuario numero {{ loop.index }} - {{ user }}
+{% endfor %}
+
+{% for host in groups['webservers'] %}
+  - Host:  {{ host }}
+{% endfor %}
+
+{% if condicional %}
+  Entro en el if
+{% else %}
+  No entro en el if
+{% endif %}
+
+{{ personas | to_json }}
+
+
+{{ personas | to_yaml }}
+
+
+{{ personas | to_nice_json }}
+
+
+{{ personas | to_nice_yaml }}
+
+

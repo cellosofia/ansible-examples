@@ -1,0 +1,13 @@
+---
+- name: ejemplo stat
+  hosts: servera
+  tasks:
+    - name: verificar que exista el archivo /tmp/miarchivo
+      stat:
+        path: /tmp/miarchivo
+        checksum_algorithm: md5
+      register: result_stat
+
+    - name: verificamos el checksum del archivo
+      debug:
+        var: result_stat.stat

@@ -1,0 +1,10 @@
+---
+- name: utilizamos redis_prod para las maquinas de produccion
+  hosts: servera,serverb
+  roles:
+    - redis_prod
+
+- name: utilizamos ansible-role-redis para servidores de desarrollo
+  hosts: serverc,serverd
+  roles:
+    - ansible-role-redis

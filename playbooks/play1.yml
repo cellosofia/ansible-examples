@@ -1,0 +1,8 @@
+---
+- name: play 1
+  hosts: all
+  gather_facts: no
+  tasks:
+    - name: debug task
+      debug:
+        msg: hello world from play 1

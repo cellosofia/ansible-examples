@@ -1,0 +1,14 @@
+---
+- name: play de sincronizacion de tiempo
+  hosts: all
+  vars:
+    timezone: "America/Asuncion"
+    timesync_ntp_servers:
+      - hostname: 172.25.254.254
+        iburst: yes
+  roles:
+    - rhel-system-roles.timesync
+  tasks:
+    - name: configurar el timezone
+      timezone:
+        name: "{{ timezone }}"

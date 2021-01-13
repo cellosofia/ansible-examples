@@ -1,0 +1,27 @@
+---
+- name: ejemplo debug
+  hosts: servera
+  tasks:
+    - name: esta tarea no se va a ejecutar
+      debug:
+        msg: "hola mundo"
+
+    - name: ver la hora
+      shell: "date; /bin/false"
+      register: result
+      ignore_errors: true
+
+    - name: imprimir con debug la hora
+      debug:
+        var: result
+
+    # esta tarea se puso porque .... hacia falta
+    - name: ejecutar tarea en caso de que el comando haya sido exitoso
+      debug:
+        msg: "El comando fue exitoso"
+      when: result.rc == 0
+
+    - name: modulo yum
+      yum:
+        name: httpd
+        state: present

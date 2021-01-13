@@ -1,0 +1,15 @@
+---
+- name: ejemplo uri
+  hosts: servera
+  tasks:
+    - name: prueba uri
+      uri:
+        url: http://google.com/
+        follow_redirects: none
+        return_content: yes
+      register: apiresponse
+
+    - name: fallar si el servidor no esta respondiendo
+      fail:
+        msg: "El servidor no esta respondiendo"
+      when: apiresponse.status != 200
