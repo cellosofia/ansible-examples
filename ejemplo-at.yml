@@ -1,0 +1,12 @@
+---
+- name: ejemplo at
+  hosts: servera
+  tasks:
+    - name: definir comando a ejecutar en 20 minutos
+      at:
+        command: userdel -r devops_user
+        count: 2
+        units: minutes
+        unique: yes
+        #script_file: scripts/borrar_usuario
+        state: present

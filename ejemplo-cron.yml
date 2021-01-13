@@ -1,0 +1,14 @@
+---
+- name: ejempolo cron
+  hosts: servera
+  tasks:
+    - name: definir tarea cron que borre los archivos temporales
+      cron:
+        name: "Borrar temporales"
+        minute: 00
+        hour: 03
+        job: "rm -rf /tmp/mistemporales"
+        #special_time: reboot|yearly|anually|monthly|weekly|daily|hourly
+        state: present
+        #cron_file: scripts/miarchivocron
+        #backup: yes|no

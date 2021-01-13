@@ -1,0 +1,46 @@
+---
+- name: ejemplo network con rol de sistema
+  hosts: servera
+  vars:
+    network_provider: nm
+    network_connections:
+      - name: enp2s0
+        type: ethernet
+        ip:
+          address: 172.25.250.30/24
+        persistent_state: present
+        state: present
+        autoconnect: yes
+        zone: public
+  roles:
+    - rhel-system-roles.network
+
+  tasks:
+    - name: configurar la interfaza de red con el modulo nmcli
+      nmcli:
+        conn_name: enp2s0
+        ifname: enp2s0
+        type: ethernet
+        ip4: 172.25.250.30/24
+        gw4: 172.25.250.1
+        state: present
+
+    - name: cambiar el hostname del servidor
+      hostname:
+        name: servera.lab.example.com
+
+
+    - name: configurar el firewall para este habilitado en la zona public
+      firewalld:
+        zone: public
+        interface: enp2s0
+        permanent: yes
+        state: enabled
+
+    - name: configurar el firewall para habilitar el servicio http
+      firewalld:
+        service: http
+        immediate: yes
+        permanent: yes
+        state: enabled
+

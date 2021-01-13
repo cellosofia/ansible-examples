@@ -1,0 +1,32 @@
+---
+- name: ejemplo subscripciones
+  hosts: servera
+  tasks:
+    - name: registramos el sistema y subscribimos el mismo a un pool
+      redhat_subscription:
+        username: "{{ redhat_username }}"
+        password: "{{ redhat_password }}"
+        pool_ids: "{{ redhat_pool_id }}"
+        state: present
+
+    - name: activar un canal de software o repositorio de red hat
+      rhsm_repository:
+        name:
+          - rhel-8-for-x86_64-baseos-rpms
+          - rhel-8-for-x86_64-appstream-rpms #esto es un ejemplo nada mas hay que corroborar
+        state: present
+
+
+    - name: configurar un repositorio de terceros
+      yum_repository:
+        file: example
+        name: example-internal
+        description: Ejemplo interno de mi organizacion
+        baseurl: http://myrepo.example.com/yum/repository
+        enabled: yes
+        gpgcheck: yes
+
+    - name: importar clave gpg de los paquetes personalizados
+      rpm_key:
+        key: http://myrepo.example.com/yum/repository/key.gpg
+        state: present

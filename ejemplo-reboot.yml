@@ -1,0 +1,10 @@
+---
+- name: ejemplo reboot
+  hosts: servera
+  tasks:
+    - name: "rebootear el sistema luego del update"
+      reboot:
+         reboot_timeout: 180 # timeout opcional
+
+    - name: reiniciar el servidor de forma forzada y rapida # sin ningun parametro
+      reboot:

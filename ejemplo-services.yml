@@ -1,0 +1,25 @@
+---
+- name: ejemplo de servicios
+  hosts: servera
+  tasks:
+    - name: iniciar el servico httpd
+      service:
+        name: httpd
+        state: started # tambien puede ser "stopped"
+        enabled: true # tambien puede ser "false"
+
+    - name: copiar un archivo a /etc/systemd/system/miservicio.service
+      file:
+        path: /etc/systemd/system/miservicio.service
+        state: touch
+
+    - name: reinicializar systemd
+      systemd:
+        daemon-reload: yes
+
+    - name: reiniciar el servicio httpd
+      systemd:
+        name: httpd
+        state: reload
+
+      

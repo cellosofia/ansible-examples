@@ -1,0 +1,52 @@
+---
+- name: ejemplo storage
+  hosts: servera
+  tasks:
+
+    - name: primero particionamos el disco
+      parted:
+        device: /dev/vdb
+        number: 1
+        part_end: 5GB
+        state: present
+
+    - name: segundo, creo el volumen logico con el modulo lvg
+      lvg:
+        vg: vg1
+        pvs: /dev/vdb1
+        pesize: 32
+        state: present
+
+    - name: tercer paso, creo un volumen logico encima del grupo de volumenes
+      lvol:
+        lv: lv1
+        vg: vg1
+        size: 2g
+
+    - name: cuarto paso, formatear el filesystem con xfs
+      filesystem:
+        fstype: xfs
+        dev: /dev/mapper/vg1-lv1
+
+    - name: creare punto de montaje
+      file:
+        path: /data
+        state: directory
+
+    - name: por ultimo, montar el volumen en un directorio
+      mount:
+        path: /data
+        src: /dev/mapper/vg1-lv1
+        fstype: xfs
+        state: present
+
+    #- name: puedo utilizar mount para montar directorios por red, como por ejemplo NFS
+    #  mount:
+    #    name: /nfsshare
+    #    src: nfsserver.example.com:/share/nfsshare
+    #    fstype: nfs
+    #    opts: defaults,nobootwait
+    #    dump: 0
+    #    passno: 2
+    #    state: mounted
+

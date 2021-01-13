@@ -1,0 +1,22 @@
+---
+- name: ejemplo de comandos arbitrarios
+  hosts: servera
+  vars:
+    archivo: /etc/motd
+  tasks:
+    - name: ejemplo shell
+      shell: cat {{ archivo | quote }} # esto se ejecuta dentro de una shell
+
+    - name: ejemplo command # aqui no tenemos expansion de variables y otros atributos de shell
+      command: "touch /tmp/hola"
+      args:
+        chdir: /tmp
+        creates: /tmp/hola
+
+    - name: imprimir todas las variables de entorno de ansible a partir de los facts
+      debug:
+        msg: "{{ ansible_env }}"
+
+    - name: imprimir solamente la variable de entorno HOME
+      debug: 
+        msg: "{{ lookup('env', 'HOME') }}"

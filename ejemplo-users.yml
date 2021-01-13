@@ -1,0 +1,40 @@
+---
+- name: manejo de usuarios, ejemplos
+  hosts: servera
+  tasks:
+
+    - name: crear grupos a los cuales va a pertenecer el usuario devops_user
+      group:
+        name: "{{ item }}"
+        state: present
+        system: no
+      loop:
+        - sys_admins
+        - developers
+
+    - name: crear usuario devops
+      user:
+        name: devops_user
+        shell: /bin/bash
+        groups: sys_admins,developers,wheel
+        group: devops
+        append: yes
+        generate_ssh_key: yes
+        ssh_key_bits: 2048
+        ssh_key_file: .ssh/id_rsa
+        comment: "DevOps User"
+        home: /home/devops_user
+        create_home: yes
+        system: no
+
+    #- name: copiar claves del host a los servidores remotos
+    #  known_hosts:
+    #    path: /etc/ssh/ssh_known_hosts
+    #    name: devops_user
+    #    key: "{{ lookup('file', '/home/student/.ssh/lab_rsa.pub') }}"
+
+    - name: agregar clave autorizada en el servidor remoto
+      authorized_key:
+        user: devops_user
+        state: present
+        key: "{{ lookup('file', '/home/student/.ssh/lab_rsa.pub') }}"
