@@ -14,7 +14,7 @@
             dest: /etc/yum/pluginconf.d/versionlock.list
             line: tzdata-2016j-1
             state: present
-      when: ansible_distribution == "Red Hat"
+      when: ansible_distribution == "RedHat"
       rescue:
         - name: revertir las acciones del bloque
           shell: /super/script/python.py
